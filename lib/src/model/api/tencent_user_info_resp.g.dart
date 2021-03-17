@@ -8,7 +8,7 @@ part of 'tencent_user_info_resp.dart';
 
 TencentUserInfoResp _$TencentUserInfoRespFromJson(Map<String, dynamic> json) {
   return TencentUserInfoResp(
-    ret: json['ret'] as int ?? 0,
+    ret: json['ret'] as int,
     msg: json['msg'] as String,
     isLost: json['is_lost'] as int,
     nickname: json['nickname'] as String,

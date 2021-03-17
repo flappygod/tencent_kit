@@ -74,7 +74,7 @@ class Tencent {
     required String appId,
     String? universalLink,
   }) {
-    assert(appId?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_REGISTERAPP,
       <String, dynamic>{
@@ -109,7 +109,7 @@ class Tencent {
   Future<void> login({
     required List<String> scope,
   }) {
-    assert(scope?.isNotEmpty ?? false);
+    assert(scope.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_LOGIN,
       <String, dynamic>{
@@ -130,9 +130,9 @@ class Tencent {
     required String openid,
     required String accessToken,
   }) {
-    assert(appId?.isNotEmpty ?? false);
-    assert(openid?.isNotEmpty ?? false);
-    assert(accessToken?.isNotEmpty ?? false);
+    assert(appId.isNotEmpty);
+    assert(openid.isNotEmpty);
+    assert(accessToken.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://graph.qq.com/user/get_user_info?access_token=$accessToken&oauth_consumer_key=$appId&openid=$openid'))
@@ -157,7 +157,7 @@ class Tencent {
     required String accessToken,
     String unionid = '1',
   }) {
-    assert(accessToken?.isNotEmpty ?? false);
+    assert(accessToken.isNotEmpty);
     return HttpClient()
         .getUrl(Uri.parse(
             'https://graph.qq.com/oauth2.0/me?access_token=$accessToken&unionid=$unionid'))
@@ -215,7 +215,7 @@ class Tencent {
     required String summary,
   }) {
     assert(scene == TencentScene.SCENE_QQ);
-    assert(summary?.isNotEmpty ?? false);
+    assert(summary.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_SHARETEXT,
       <String, dynamic>{
@@ -257,9 +257,9 @@ class Tencent {
     int extInt = TencentQZoneFlag.DEFAULT,
   }) {
     assert(scene == TencentScene.SCENE_QQ);
-    assert(title?.isNotEmpty ?? false);
-    assert(musicUrl?.isNotEmpty ?? false);
-    assert(targetUrl?.isNotEmpty ?? false);
+    assert(title.isNotEmpty);
+    assert(musicUrl.isNotEmpty);
+    assert(targetUrl.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMUSIC,
       <String, dynamic>{
@@ -285,8 +285,8 @@ class Tencent {
     String? appName,
     int extInt = TencentQZoneFlag.DEFAULT,
   }) {
-    assert(title?.isNotEmpty ?? false);
-    assert(targetUrl?.isNotEmpty ?? false);
+    assert(title.isNotEmpty);
+    assert(targetUrl.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_SHAREWEBPAGE,
       <String, dynamic>{
