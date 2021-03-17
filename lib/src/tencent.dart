@@ -71,8 +71,8 @@ class Tencent {
 
   /// 向 Open_SDK 注册
   Future<void> registerApp({
-    @required String appId,
-    String universalLink,
+    required String appId,
+    String? universalLink,
   }) {
     assert(appId?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(
@@ -96,18 +96,18 @@ class Tencent {
   }
 
   /// 检查QQ是否已安装
-  Future<bool> isQQInstalled() {
+  Future<bool?> isQQInstalled() {
     return _channel.invokeMethod<bool>(_METHOD_ISQQINSTALLED);
   }
 
   /// 检查QQ是否已安装
-  Future<bool> isTIMInstalled() {
+  Future<bool?> isTIMInstalled() {
     return _channel.invokeMethod<bool>(_METHOD_ISTIMINSTALLED);
   }
 
   /// 登录
   Future<void> login({
-    @required List<String> scope,
+    required List<String> scope,
   }) {
     assert(scope?.isNotEmpty ?? false);
     return _channel.invokeMethod<void>(
@@ -126,9 +126,9 @@ class Tencent {
   /// 用户信息
   /// https://wiki.connect.qq.com/get_user_info
   Future<TencentUserInfoResp> getUserInfo({
-    @required String appId,
-    @required String openid,
-    @required String accessToken,
+    required String appId,
+    required String openid,
+    required String accessToken,
   }) {
     assert(appId?.isNotEmpty ?? false);
     assert(openid?.isNotEmpty ?? false);
@@ -140,7 +140,7 @@ class Tencent {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        ContentType contentType = response.headers.contentType;
+        ContentType? contentType = response.headers.contentType;
         Encoding encoding = Encoding.getByName(contentType?.charset) ?? utf8;
         String content = await encoding.decodeStream(response);
         return TencentUserInfoResp.fromJson(
@@ -154,7 +154,7 @@ class Tencent {
   /// UnionID
   /// https://wiki.connect.qq.com/unionid%E4%BB%8B%E7%BB%8D
   Future<TencentUnionidResp> getUnionId({
-    @required String accessToken,
+    required String accessToken,
     String unionid = '1',
   }) {
     assert(accessToken?.isNotEmpty ?? false);
@@ -165,14 +165,14 @@ class Tencent {
       return request.close();
     }).then((HttpClientResponse response) async {
       if (response.statusCode == HttpStatus.ok) {
-        ContentType contentType = response.headers.contentType;
+        ContentType? contentType = response.headers.contentType;
         Encoding encoding = Encoding.getByName(contentType?.charset) ?? utf8;
         String callback = await encoding.decodeStream(response);
         // 腾讯有毒 callback( $json );
         RegExp exp = RegExp(r'callback\( (.*) \)\;');
-        Match match = exp.firstMatch(callback);
+        Match match = exp.firstMatch(callback)!;
         if (match.groupCount == 1) {
-          String content = match.group(1);
+          String content = match.group(1)!;
           return TencentUnionidResp.fromJson(
               json.decode(content) as Map<String, dynamic>);
         }
@@ -184,17 +184,17 @@ class Tencent {
 
   /// 分享 - 说说
   Future<void> shareMood({
-    @required int scene,
-    String summary,
-    List<Uri> imageUris,
-    Uri videoUri,
+    required int scene,
+    String? summary,
+    List<Uri>? imageUris,
+    Uri? videoUri,
   }) {
     assert(scene == TencentScene.SCENE_QZONE);
     assert((summary?.isNotEmpty ?? false) ||
         (imageUris?.isNotEmpty ?? false) ||
         (videoUri != null && videoUri.isScheme(_SCHEME_FILE)) ||
         ((imageUris?.isNotEmpty ?? false) &&
-            imageUris.every((Uri element) =>
+            imageUris!.every((Uri element) =>
                 element != null && element.isScheme(_SCHEME_FILE))));
     return _channel.invokeMethod<void>(
       _METHOD_SHAREMOOD,
@@ -203,7 +203,7 @@ class Tencent {
         if (summary?.isNotEmpty ?? false) _ARGUMENT_KEY_SUMMARY: summary,
         if (imageUris?.isNotEmpty ?? false)
           _ARGUMENT_KEY_IMAGEURIS:
-              imageUris.map((Uri imageUri) => imageUri.toString()).toList(),
+              imageUris!.map((Uri imageUri) => imageUri.toString()).toList(),
         if (videoUri != null) _ARGUMENT_KEY_VIDEOURI: videoUri.toString(),
       },
     );
@@ -211,8 +211,8 @@ class Tencent {
 
   /// 分享 - 文本（Android调用的是系统API，故而不会有回调）
   Future<void> shareText({
-    @required int scene,
-    @required String summary,
+    required int scene,
+    required String summary,
   }) {
     assert(scene == TencentScene.SCENE_QQ);
     assert(summary?.isNotEmpty ?? false);
@@ -227,9 +227,9 @@ class Tencent {
 
   /// 分享 - 图片
   Future<void> shareImage({
-    @required int scene,
-    @required Uri imageUri,
-    String appName,
+    required int scene,
+    required Uri imageUri,
+    String? appName,
     int extInt = TencentQZoneFlag.DEFAULT,
   }) {
     assert(scene == TencentScene.SCENE_QQ);
@@ -247,13 +247,13 @@ class Tencent {
 
   /// 分享 - 音乐
   Future<void> shareMusic({
-    @required int scene,
-    @required String title,
-    String summary,
-    Uri imageUri,
-    @required String musicUrl,
-    @required String targetUrl,
-    String appName,
+    required int scene,
+    required String title,
+    String? summary,
+    Uri? imageUri,
+    required String musicUrl,
+    required String targetUrl,
+    String? appName,
     int extInt = TencentQZoneFlag.DEFAULT,
   }) {
     assert(scene == TencentScene.SCENE_QQ);
@@ -277,12 +277,12 @@ class Tencent {
 
   /// 分享 - 网页
   Future<void> shareWebpage({
-    @required int scene,
-    @required String title,
-    String summary,
-    Uri imageUri,
-    @required String targetUrl,
-    String appName,
+    required int scene,
+    required String title,
+    String? summary,
+    Uri? imageUri,
+    required String targetUrl,
+    String? appName,
     int extInt = TencentQZoneFlag.DEFAULT,
   }) {
     assert(title?.isNotEmpty ?? false);

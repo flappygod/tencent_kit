@@ -9,8 +9,8 @@ part 'tencent_login_resp.g.dart';
 )
 class TencentLoginResp extends TencentSdkResp {
   const TencentLoginResp({
-    int ret,
-    String msg,
+    int? ret,
+    String? msg,
     this.openid,
     this.accessToken,
     this.expiresIn,
@@ -20,13 +20,13 @@ class TencentLoginResp extends TencentSdkResp {
   factory TencentLoginResp.fromJson(Map<String, dynamic> json) =>
       _$TencentLoginRespFromJson(json);
 
-  final String openid;
-  final String accessToken;
-  final int expiresIn;
-  final int createAt;
+  final String? openid;
+  final String? accessToken;
+  final int? expiresIn;
+  final int? createAt;
 
   bool get isExpired =>
-      DateTime.now().millisecondsSinceEpoch - createAt >= expiresIn * 1000;
+      DateTime.now().millisecondsSinceEpoch - createAt! >= expiresIn! * 1000;
 
   Map<String, dynamic> toJson() => _$TencentLoginRespToJson(this);
 }

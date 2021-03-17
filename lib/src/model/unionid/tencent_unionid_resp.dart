@@ -21,11 +21,11 @@ class TencentUnionidResp {
   @JsonKey(
     defaultValue: ERROR_SUCCESS,
   )
-  final int error;
-  final String errorDescription;
-  final String clientId;
-  final String openid;
-  final String unionid;
+  final int? error;
+  final String? errorDescription;
+  final String? clientId;
+  final String? openid;
+  final String? unionid;
 
   static const int ERROR_SUCCESS = 0;
 
